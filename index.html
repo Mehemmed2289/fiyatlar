@@ -8,7 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        :root { --maarif-navy: #00525d; }
+        :root { 
+            --maarif-navy: #00525d; 
+            --maarif-light: #f0fdfa;
+        }
         body { font-family: 'Poppins', sans-serif; transition: background-color 0.3s, color 0.3s; }
         
         .dark body { background-color: #020617; color: #f8fafc; }
@@ -44,21 +47,20 @@
             z-index: -100;
         }
 
-        .discount-hint {
-            color: #1e293b !important;
-            font-weight: 700 !important;
-        }
-        .dark .discount-hint {
-            color: #cbd5e1 !important;
-        }
-        
         .warning-text {
-            color: #e11d48 !important;
+            color: #ef4444 !important; /* Qırmızı rəng */
             font-size: 8px;
             font-weight: 800;
             text-transform: uppercase;
-            margin-top: 4px;
+            margin-top: 6px;
             display: none;
+            line-height: 1.2;
+        }
+        
+        /* Sağ panelin xüsusi rəngi */
+        .invoice-panel {
+            background-color: var(--maarif-navy);
+            color: white;
         }
     </style>
 </head>
@@ -120,13 +122,13 @@
 
                     <div class="grid grid-cols-2 gap-3">
                         <!-- Bacı Qardaş Paneli -->
-                        <div id="siblingPanel" class="flex flex-col p-4 bg-gray-50 dark:bg-slate-900/50 rounded-xl border border-transparent transition-all relative">
+                        <div id="siblingPanel" class="flex flex-col p-4 bg-gray-50 dark:bg-slate-900/50 rounded-xl border border-transparent transition-all duration-300 relative">
                             <label class="cursor-pointer flex items-center">
                                 <input type="checkbox" id="siblingDisc" onchange="calculate()" class="w-4 h-4 accent-teal-500">
                                 <span class="ml-2 text-[10px] font-black uppercase text-gray-700 dark:text-gray-200">Bacı-Qardaş</span>
                             </label>
-                            <span id="siblingHint" class="discount-hint text-[9px] mt-2 leading-tight">10% Endirim (Məktəb tərəfindən)</span>
-                            <span id="siblingWarning" class="warning-text">Əsas endirimlə birgə tətbiq olunmur</span>
+                            <span id="siblingHint" class="text-gray-500 text-[9px] mt-2 leading-tight">10% Endirim</span>
+                            <span id="siblingWarning" class="warning-text">Kurum/Əməkdaş endirimi ilə birgə tətbiq olunmur</span>
                         </div>
 
                         <!-- Tam Ödəniş -->
@@ -135,7 +137,7 @@
                                 <input type="checkbox" id="fullPayDisc" onchange="calculate()" class="w-4 h-4 accent-teal-500">
                                 <span class="ml-2 text-[10px] font-black uppercase text-gray-700 dark:text-gray-200">Tam Ödəniş</span>
                             </div>
-                            <span class="discount-hint text-[9px] mt-2 leading-tight">5% Endirim (Net məbləğdən)</span>
+                            <span class="text-gray-500 text-[9px] mt-2 leading-tight">5% Endirim (Netdən)</span>
                         </label>
                     </div>
 
@@ -148,56 +150,56 @@
                     </label>
                 </div>
 
-                <!-- Hesab Faktura Paneli -->
-                <div class="bg-slate-900 dark:bg-slate-950 rounded-2xl p-6 border border-gray-100 dark:border-slate-800 shadow-inner text-white">
-                    <h3 class="text-center text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-6 border-b border-slate-800 pb-4">Hesab Faktura</h3>
+                <!-- Hesab Faktura Paneli (Navy Rəng) -->
+                <div class="invoice-panel rounded-2xl p-6 shadow-xl border border-white/10">
+                    <h3 class="text-center text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-6 border-b border-white/10 pb-4">Hesab Faktura</h3>
                     
                     <div class="space-y-4 mb-8">
                         <div class="flex justify-between text-xs font-bold">
-                            <span class="text-gray-500 uppercase">İlkin Qiymət:</span>
+                            <span class="text-white/50 uppercase">İlkin Qiymət:</span>
                             <span id="uiBase">0.00 AZN</span>
                         </div>
-                        <div class="flex justify-between text-xs font-bold text-rose-500">
+                        <div class="flex justify-between text-xs font-bold text-rose-300">
                             <span class="uppercase">Ümumi Endirim:</span>
                             <span id="uiDiscount">-0.00 AZN</span>
                         </div>
-                        <div class="flex justify-between text-xs font-bold pt-4 border-t border-dashed border-slate-800">
-                            <span class="text-gray-400 uppercase font-black">Net Təhsil:</span>
-                            <span id="uiNet" class="text-teal-400">0.00 AZN</span>
+                        <div class="flex justify-between text-xs font-bold pt-4 border-t border-dashed border-white/10">
+                            <span class="text-white/40 uppercase font-black">Net Təhsil:</span>
+                            <span id="uiNet" class="text-teal-300">0.00 AZN</span>
                         </div>
                         <div class="flex justify-between text-xs font-bold">
-                            <span class="text-gray-400 uppercase">Yemək:</span>
+                            <span class="text-white/40 uppercase">Yemək:</span>
                             <span id="uiFood">0.00 AZN</span>
                         </div>
                     </div>
 
-                    <div class="bg-maarif p-6 rounded-2xl text-center shadow-xl mb-8">
-                        <p class="text-[8px] text-white/80 uppercase font-black mb-1 tracking-widest">ÖDƏNİLƏCƏK CƏMİ MƏBLƏĞ</p>
+                    <div class="bg-white/10 p-6 rounded-2xl text-center shadow-lg mb-8">
+                        <p class="text-[8px] text-white/60 uppercase font-black mb-1 tracking-widest">ÖDƏNİLƏCƏK CƏMİ MƏBLƏĞ</p>
                         <h2 id="uiGrand" class="text-3xl font-black text-white">0 AZN</h2>
                     </div>
 
                     <div id="instPanel" class="space-y-3">
                         <div class="flex items-center gap-2 mb-4">
-                            <div class="h-[1px] flex-grow bg-slate-800"></div>
-                            <p class="text-[9px] font-black text-gray-500 uppercase tracking-tighter">4 Hissəli Plan</p>
-                            <div class="h-[1px] flex-grow bg-slate-800"></div>
+                            <div class="h-[1px] flex-grow bg-white/10"></div>
+                            <p class="text-[9px] font-black text-white/30 uppercase tracking-tighter">4 Hissəli Plan</p>
+                            <div class="h-[1px] flex-grow bg-white/10"></div>
                         </div>
                         <div class="grid grid-cols-2 gap-3">
-                            <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 text-center">
-                                <p class="text-[7px] text-gray-500 font-bold uppercase mb-1">1. Ödəniş</p>
+                            <div class="bg-white/5 p-3 rounded-xl border border-white/10 text-center">
+                                <p class="text-[7px] text-white/40 font-bold uppercase mb-1">1. Ödəniş</p>
                                 <p id="i1" class="text-[13px] font-black text-white">0 AZN</p>
                             </div>
-                            <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 text-center">
-                                <p class="text-[7px] text-gray-500 font-bold uppercase mb-1">2. Ödəniş</p>
+                            <div class="bg-white/5 p-3 rounded-xl border border-white/10 text-center">
+                                <p class="text-[7px] text-white/40 font-bold uppercase mb-1">2. Ödəniş</p>
                                 <p id="i2" class="text-[13px] font-black text-white">0 AZN</p>
                             </div>
-                            <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 text-center">
-                                <p class="text-[7px] text-gray-500 font-bold uppercase mb-1">3. Ödəniş</p>
+                            <div class="bg-white/5 p-3 rounded-xl border border-white/10 text-center">
+                                <p class="text-[7px] text-white/40 font-bold uppercase mb-1">3. Ödəniş</p>
                                 <p id="i3" class="text-[13px] font-black text-white">0 AZN</p>
                             </div>
-                            <div class="bg-teal-500/10 p-3 rounded-xl border border-teal-500/20 text-center">
-                                <p class="text-[7px] text-teal-400 font-bold uppercase mb-1">4. Ödəniş (Qalıq)</p>
-                                <p id="i4" class="text-[13px] font-black text-teal-300">0 AZN</p>
+                            <div class="bg-teal-400 p-3 rounded-xl text-center">
+                                <p class="text-[7px] text-maarif font-bold uppercase mb-1">4. Ödəniş (Qalıq)</p>
+                                <p id="i4" class="text-[13px] font-black text-maarif">0 AZN</p>
                             </div>
                         </div>
                     </div>
@@ -206,7 +208,7 @@
         </div>
     </div>
 
-    <!-- PDF Modal & Template hissələri (dəyişməz qalıb) -->
+    <!-- Modallar və PDF Template hissəsi eyni qalır -->
     <div id="pdfModal" class="fixed inset-0 bg-slate-900/80 hidden items-center justify-center p-4 z-50 backdrop-blur-md">
         <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl w-full max-w-sm shadow-2xl border border-gray-100 dark:border-slate-700 text-center">
             <h3 class="text-gray-800 dark:text-white font-black mb-6 uppercase text-sm tracking-widest">ŞAGİRD MƏLUMATLARI</h3>
@@ -314,13 +316,13 @@
             const sibHint = document.getElementById('siblingHint');
             const sibWarning = document.getElementById('siblingWarning');
 
-            // Kurum (25) və ya Əməkdaş (75/50) olduqda Bacı-Qardaş bloklanır
+            // Bloklanma məntiqi: Kurum(25) və ya Əməkdaş(75/50)
             const isBlocked = ["25", "75", "50"].includes(primarySel.value);
 
             if (isBlocked) {
                 sibCheck.checked = false;
                 sibCheck.disabled = true;
-                sibPanel.style.opacity = "0.2"; // Görünməzə yaxın solğunluq
+                sibPanel.style.opacity = "0.15"; // Görünməzə yaxın (daha şəffaf)
                 sibHint.style.display = "none";
                 sibWarning.style.display = "block";
             } else {
